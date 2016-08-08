@@ -132,7 +132,12 @@ class W3_Plugin_Minify extends W3_Plugin {
         if ($buffer != '' && w3_is_xml($buffer)) {
             if ($this->can_minify2($buffer)) {
                 $this->minify_helpers = new _W3_MinifyHelpers($this->_config);
-
+                
+                if (function_exists('is_amp_endpoint') && is_amp_endpoint()) {
+                    $add_script_and_style = false;
+                } else {
+                    $add_script_and_style = true;
+                }
                 /**
                  * Replace script and style tags
                  */
